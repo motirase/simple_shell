@@ -1,122 +1,134 @@
-# simple_shell
-## AUTHORS
-This file lists all individuals who have contributed content to this repository.
-## man_1_simple_shell
-This file is a manual page for our simple Unix command line interpreter.
-## C - Simple Shell Project
-### Requirements
-- Allowed editors: `vi`, `vim`, `emacs`
-- All files will be compiled on Ubuntu 14.04 LTS
-- The C programs and functions will be compiled with `gcc 4.8.4` using the flags `-Wall` `-Werror` `-Wextra` and `-pedantic`
-- The code uses the `Betty` style. It will be checked using [betty-style.pl](https://github.com/holbertonschool/Betty/blob/master/betty-style.pl) and [betty-doc.pl](https://github.com/holbertonschool/Betty/blob/master/betty-doc.pl).
-- There will be no more than 5 functions per file, and each file should end in a newline.
-- All header files should be include guarded
-- Only use system calls when necessary
-### Output
-- Unless specified, our program should have the exact same output as `sh` (`/bin/sh`) as well as the exact same error output. The only difference is when we print an error, the name of the program will be equivalent to our `argv[0]` (see below)
+# Simple Shell
+----
+!["Holberton Logo"](https://www.holbertonschool.com/holberton-logo-twitter-card.png)
 
-Example of error with `sh`:
-```
-$ echo "qwerty" | /bin/sh
-/bin/sh: 1: qwerty: not found
-$ echo "qwerty" | /bin/../bin/sh
-/bin/../bin/sh: 1: qwerty: not found
-```
-Same error with our program `hsh`:
-```
-$ echo "qwerty" | /bin/hsh
-/bin/sh: 1: qwerty: not found
-$ echo "qwerty" | ./././hsh
-./././hsh: 1: qwerty: not found
-```
-### List of allowed functions and system calls
-- `access` (man 2 access)
-- `chdir` (man 2 chdir)
-- `close` (man 2 close)
-- `closedir` (man 3 closedir)
-- `execve` (man 2 execve)
-- `exit` (man 3 exit)
-- `fork` (man 2 fork)
-- `free` (man 3 free)
-- `stat` (man 2 stat)
-- `lstat` (man 2 lstat)
-- `fstat` (man 2 fstat)
-- `getcwd` (man 3 getcwd)
-- `getline` (man 3 getline)
-- `kill` (man 2 kill)
-- `malloc` (man 3 malloc)
-- `open` (man 2 open)
-- `opendir` (man 3 opendir)
-- `perror` (man 3 perror)
-- `read` (man 2 read)
-- `readdir` (man 3 readdir)
-- `signal` (man 2 signal)
-- `strtok` (man 3 strtok)
-- `wait` (man 2 wait)
-- `waitpid` (man 2 waitpid)
-- `wait3` (man 2 wait3)
-- `wait4` (man 2 wait4)
-- `write` (man 2 write)
-- `_exit` (man 2 `_exit`)
-- `isatty` (man 3 isatty)
-- `fflush` (man 3 fflush)
-### Compilation
-The shell should be compiled in this way:
-```
-gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
-```
-### How it should work
-Our shell should work like this in interactive mode:
-```
-$ ./hsh
-($) /bin/ls
-hsh main.c shell.c
-($)
-($) exit
-$
-```
-But also in non-interactive mode:
-```
-$ echo "/bin/ls" | ./hsh
-hsh main.c shell.c test_ls_2
-$
-$ cat test_ls_2
-/bin/ls
-/bin/ls
-$
-$ cat test_ls_2 | ./hsh
-hsh main.c shell.c test_ls_2
-hsh main.c shell.c test_ls_2
-$
-```
-### The simple shell
-What our UNIX command line interpreter does:
-- Display a prompt and wait for the user to type a command. A command line always ends with a new line.
-- The command is displayed again each time a command has been executed.
-- The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features.
-- The command lines are made only of one word.
-- If an executable cannot be found, print an error message and display the prompt again.
-- Handle errors.
-- Handle the "end of file" condition (`Control+D`)
-- Handle the `PATH`
-- Take the command `exit` that exits the shell.
-- Print current environment with `env`
+## What is Simple shell?
 
-What our shell does not have to do:
-- Be able to move the cursor.
-- Handle special characters: `"`, `'`, `\`, `*`, `&`, `#`, `` ` ``
+This is a simple implementation of  command-line interpreter for the Unix operating system created by holberton students **Nildiert Jimenez** and **Ricardo Gutierrez**. 
 
-| **File**  | **Description** |
-| ------------- | ------------- |
-| **main.c**  | entry point of program  |
-| **egg.c**  | Main strucute of the program that handles everything  |
-| **pathfuncs.c** | handles the path |
-| **envstart.c** | sets a linked list for enviornment variables |
-| **strtok.c** | creates a buffer for strings to be tokenized |
-| **readline.c** | reads user input and returns a prompt |
-| **splitline.c**| creates an array of tokenized args |
-| **isitbuilt.c**| checks if a command is built in or not |
-| **execute.c**| forks a process and creates a child PID|
+See [Unix Shell](https://en.wikipedia.org/wiki/Unix_shell)
 
-Rashaad Colbert Jr. [Github](https://github.com/rcolbert30)
-Athena Deng [Github](https://github.com/ad-egg) 
+----
+## Learning objetives
+* Who designed and implemented the original Unix operating system.
+* Who wrote the first version of the **UNIX** shell
+* Who invented the B programming language (the direct predecessor to the C programming language).
+* Who is [Ken Thompson](https://github.com/kyeeh/simple_shell).
+* How does a shell work .
+* What is a **pid** and a **ppid**.
+* How to manipulate the environment of the current process.
+* What is the difference between a function and a system call.
+* How to create processes.
+* What are the three prototypes of main.
+* How does the shell use the **PATH** to find the programs.
+* How to execute another program with the execve system call.
+* How to suspend the execution of a process until one of its children terminates.
+* What is **EOF** / “end-of-file”?
+
+----
+## Requirements
+
+* All your files will be compiled on **Ubuntu 14.04 LTS**.
+* Your C programs and functions will be compiled with **gcc 4.8.4** using the flags *-Wall -Werror -Wextra and -pedantic*.
+* All your files should end with a new line.
+* Your code should use the [Betty style](https://github.com/holbertonschool/Betty/wiki).
+* No more than 5 functions per file.
+* All your header files should be include guarded.
+* Use system calls only when you need to.
+
+----
+## Files incluided in this repository
+File |  Description
+------------ | -------------
+README.md | README file
+cmd_utils.c |  Functions of previous projects
+error_handler.c | Management errors
+exec.c | File that execute the functions of the OS system
+exec_buil_comm.c | File that execute the builtins functions
+exit.c | Function of exit
+find_path.c | Find the path 
+fork.c | Create a new proccess
+history.c | Create a history and add nodes
+man_1_simple_shell | manpage
+parser.c | Split the input
+prompt.c | Receives the string of characters
+shell.c | Content the main function
+shell.h | Header file
+stat.c | Verify the status of a command in the system
+utils.c | Strings functions
+
+----
+## Quick start
+
+### Basic Installation
+simple_shell is installed by running the following commands in your terminal.
+
+    git clone https://github.com/kyeeh/simple_shell.git
+
+After that simple_shell can compile using
+
+    gcc -Wall -Werror -Wextra -pedantic *.c -o simple_shell
+
+To start, write the following:
+
+    ./simple_shell
+
+----
+## Basic operation
+When the shell reads the entry, it proceeds through a sequence of operations.
+
+    ls -la
+
+In general terms, the shell reads your entry and divides it into words and operators
+
+ls | -la
+------------ | -------------
+
+The shell then analyzes these tokens in commands and other constructs, redirects the input and output as needed, executes the specified command, waits for the output state of the command, and makes that output status available. for further inspection or processing.
+
+    total 88
+    drwxrwxr-x  3 vagrant vagrant  4096 Apr 12 18:35 .
+    drwxr-xr-x 10 vagrant vagrant  4096 Apr 12 18:35 ..
+    drwxrwxr-x  8 vagrant vagrant  4096 Apr 12 18:35 .git
+    -rw-rw-r--  1 vagrant vagrant     7 Apr  7 23:28 .gitignore~
+    -rw-rw-r--  1 vagrant vagrant    28 Apr  7 23:07 README.md
+    -rw-rw-r--  1 vagrant vagrant   806 Apr 12 12:26 error_handler.c
+    -rw-rw-r--  1 vagrant vagrant   304 Apr 12 12:26 exec.c
+    -rw-rw-r--  1 vagrant vagrant   749 Apr 12 12:26 fork.c
+    -rwxrwxr-x  1 vagrant vagrant 13639 Apr 10 21:27 hsh
+    -rw-rw-r--  1 vagrant vagrant   806 Apr 12 12:26 prompt.c
+    -rw-rw-r--  1 vagrant vagrant   513 Apr 12 12:26 read_line.c
+    -rw-rw-r--  1 vagrant vagrant   827 Apr 12 12:26 shell.c
+    -rw-rw-r--  1 vagrant vagrant   680 Apr 12 12:26 shell.h
+    -rw-rw-r--  1 vagrant vagrant   258 Apr 12 12:26 stat.c
+    -rwxrwxr-x  1 vagrant vagrant 13966 Apr 12 12:26 test
+    -rw-rw-r--  1 vagrant vagrant   161 Apr 12 12:26 util.c
+
+
+----
+## Builtin functions
+Function | Description | Usage
+------------ | ------------- | -------------
+env | Show the environment variables |     To show the environment variables
+
+----
+## Examples
+### Interactive Mode
+
+    $ cat test_ls_2
+    /bin/ls
+    /bin/ls
+
+### Non-Interactive Mode
+
+    $ cat test_ls_2 | ./hsh
+    hsh main.c shell.c test_ls_2
+
+----
+## changelog
+* 12-Apr-2019 Creation
+
+----
+## Contributors
+* [Nildiert Jimenez](https://github.com/nildiert)
+* [Ricardo Rodriguez](https://github.com/kyeeh/simple_shell)

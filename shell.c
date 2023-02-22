@@ -1,89 +1,32 @@
 #include "shell.h"
-
 /**
- * sig_handler - checks if Ctrl C is pressed
- * @sig_num: int
+ * main - Simple Shell
+ * @ac: Argument counter.
+ * @av: Argument values.
+ * @env: Environment variables.
+ *
+ * Return: 0 or -1 in failure.
  */
-void sig_handler(int sig_num)
+int main(int ac, char **av, char **env)
 {
-	if (sig_num == SIGINT)
-	{
-		_puts("\n#cisfun$ ");
-	}
-}
+	/* char *shell_pharse; */
+	command_t **cmd_list = NULL;/* Command List */
+	char *path = NULL;
+	/* history_t **history = malloc(sizeof(history_t)); */
 
-/**
-* _EOF - handles the End of File
-* @len: return value of getline function
-* @buff: buffer
- */
-void _EOF(int len, char *buff)
-{
-	(void)buff;
-	if (len == -1)
+	path = find_path(env);
+	ac++;
+	/* shell_pharse = isatty(STDIN_FILENO) ? "> " : NULL; */
+	while (1)
 	{
-		if (isatty(STDIN_FILENO))
+		cmd_list = _prompt(av[0], av[1]); /* get commands from cmd_line */
+		if (cmd_list)
 		{
-			_puts("\n");
-			free(buff);
+			if (_fork(av[0], *cmd_list, path, env))
+				error_handler(av[0], 102);
 		}
-		exit(0);
-	}
-}
-/**
-  * _isatty - verif if terminal
-  */
-
-void _isatty(void)
-{
-	if (isatty(STDIN_FILENO))
-		_puts("#cisfun$ ");
-}
-/**
- * main - Shell
- * Return: 0 on success
- */
-
-int main(void)
-{
-	ssize_t len = 0;
-	char *buff = NULL, *value, *pathname, **arv;
-	size_t size = 0;
-	list_path *head = '\0';
-	void (*f)(char **);
-
-	signal(SIGINT, sig_handler);
-	while (len != EOF)
-	{
-		_isatty();
-		len = getline(&buff, &size, stdin);
-		_EOF(len, buff);
-		arv = splitstring(buff, " \n");
-		if (!arv || !arv[0])
-			execute(arv);
 		else
-		{
-			value = _getenv("PATH");
-			head = linkpath(value);
-			pathname = _which(arv[0], head);
-			f = checkbuild(arv);
-			if (f)
-			{
-				free(buff);
-				f(arv);
-			}
-			else if (!pathname)
-				execute(arv);
-			else if (pathname)
-			{
-				free(arv[0]);
-				arv[0] = pathname;
-				execute(arv);
-			}
-		}
+			error_handler(av[0], 103);
 	}
-	free_list(head);
-	freearv(arv);
-	free(buff);
 	return (0);
 }
