@@ -1,78 +1,29 @@
-.TH SHELL 1 "27 November 2019" GNU "Shell man page"
+." manpage for our simple shell
+
+.TH HSH 1 "20 November 2018" "Version 1.0" "General Command"
+
 .SH NAME
-.B hsh
-- Command line interpreter (shell)
+\fBhsh\fR \- UNIX command interpreter (shell)
+
 .SH SYNOPSIS
-The shell is executed by typing ./hsh
-.br
-Then, it will wait for an input such as : command [arguments] [other]
+\fBhsh\fR [command_string][argument]
+
 .SH DESCRIPTION
-This shell is a project dedicated to our studies. My partner and I, have tried to mimic the behavior of a real shell. In case you don't know what a shell is (I doubt that) here is a brief explanation. A shell is a command language interpreter that executes commands read from the standard input or from a file. Our shell does not support the arguments passed to it, yet. We are still working on it.
+\fBhsh\fR is a simple shell that reads a line from the terminal, interprets it, and executes it. It works in both interactive (takes commands from the terminal) and non-interactive (takes piped commands) modes.
+
+.SH USAGE EXAMPLE
+$ hsh
 .br
-.B What hsh can do :
+($) /bin/ls
 .br
-- Executes any command with its arguments
+hsh main.c simple_shell.c
 .br
-- Executes built-in commands
+($) exit
 .br
-- Handle pipes
-.br
-- Handle the command seperator ;
-.br
-- Handle && and || logical operators
-.br
-- handle variable replacement
-.br
-- handle the $? variable
-.br
-- handle the $$ variable
-.SH BUILT-IN FUNCTIONS
-Those are the available built-in functions :
-.br
- - exit : exit the shell
-.br
- - cd : Change Directory
-.br
- - help : Display the help page
-.br
- - history : Display history of commands used
-.br
- - alias : Put an alias for a command
-.br
- - env : Display the environment variables
-.SH OPTIONS
-There are no options for the moment.
-.SH EXIT STATUS
-The exit value depends on how a function has terminated. Every error is identified by a certain value. On success it will always return 0.
+$
+
 .SH RETURN VALUE
-Return 0 on success, otherwise it will return the exit value.
-.SH ENVIRONMENT
-- PATH
-.br
-- $?
-.br
-- $$
-.SH BUGS
-There is no known bugs at the moment.
-.SH EXAMPLE
-.B Two ways to execute our shell :
-.br
-.B The intercative mode :
-.br
- $ ./hsh
-.br
- #cisfun$ /bin/ls
-.br
- hsh main.c shell.c
-.br
- #cisfun$ exit
-.br
- $
-.br
-.B The non-interactive mode :
-.br
- $ echo "/bin/ls" | ./hsh
-.br
- hsh main.c shell.c
+Always 0.
+
 .SH AUTHORS
-Mariem Matri, Inès Chokri
+Athena Deng and Rashaad Colbert Jr
